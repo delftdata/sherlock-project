@@ -2,6 +2,8 @@ import numpy as np
 import pandas as pd
 import tensorflow as tf
 
+from pathlib import Path
+
 from sklearn.preprocessing import LabelEncoder
 
 from sherlock.deploy import model_helpers
@@ -25,7 +27,7 @@ def _transform_predictions_to_classes(y_pred, nn_id) -> np.array:
     y_pred_int = np.argmax(y_pred, axis=1)
     encoder = LabelEncoder()
     encoder.classes_ = np.load(
-        f"../sherlock/deploy/classes_{nn_id}.npy",
+        Path(__file__).parent / 'deploy' / f"classes_{nn_id}.npy",
         allow_pickle=True
     )
     y_pred = encoder.inverse_transform(y_pred_int)

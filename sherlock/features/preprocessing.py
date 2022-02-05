@@ -1,13 +1,15 @@
 from ast import literal_eval
 from collections import OrderedDict
 import random
-import os
 from typing import Union
 
 from google_drive_downloader import GoogleDriveDownloader as gd
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
+
+from pathlib import Path
+
 
 from sherlock.features.bag_of_characters import extract_bag_of_characters_features
 from sherlock.features.bag_of_words import extract_bag_of_words_features
@@ -17,8 +19,9 @@ from sherlock.features.paragraph_vectors import infer_paragraph_embeddings_featu
 
 def prepare_feature_extraction():
     """Download embedding files from Google Drive if they do not exist yet."""
-    word_embedding_file = '../sherlock/features/glove.6B.50d.txt'
-    paragraph_vector_file = '../sherlock/features/par_vec_trained_400.pkl.docvecs.vectors_docs.npy'
+
+    word_embedding_file = Path(__file__).parent / 'features' / f'glove.6B.50d.txt'
+    paragraph_vector_file = Path(__file__).parent / 'features' / 'par_vec_trained_400.pkl.docvecs.vectors_docs.npy'
     
     print(
         f"""Preparing feature extraction by downloading 2 files:
@@ -26,7 +29,7 @@ def prepare_feature_extraction():
         """
     )
 
-    if not os.path.exists(word_embedding_file):
+    if not word_embedding_file.exists():
         print('Downloading GloVe word embedding vectors.')
         file_name = word_embedding_file
         gd.download_file_from_google_drive(
@@ -38,7 +41,7 @@ def prepare_feature_extraction():
 
         print("GloVe word embedding vectors were downloaded.")
 
-    if not os.path.exists(paragraph_vector_file):
+    if not paragraph_vector_file.exists():
         print("Downloading pretrained paragraph vectors.")
         file_name = paragraph_vector_file
         gd.download_file_from_google_drive(
@@ -54,7 +57,7 @@ def prepare_feature_extraction():
     
 def prepare_word_embeddings():
 
-    word_vectors_f = open('../sherlock/features/glove.6B.50d.txt', encoding='utf-8')
+    word_vectors_f = open(Path(__file__).parent / 'features' / f'glove.6B.50d.txt', encoding='utf-8')
     word_to_embedding = {}
 
     for w in word_vectors_f:

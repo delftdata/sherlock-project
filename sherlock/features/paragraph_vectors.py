@@ -3,6 +3,8 @@ import random
 
 from gensim.models.doc2vec import Doc2Vec, TaggedDocument
 
+from pathlib import Path
+
 
 # Input: a collection of columns stored in a dataframe column 'values'
 # Output: tagged columns.
@@ -26,7 +28,8 @@ def train_paragraph_embeddings_features(columns, dim):
     model = Doc2Vec(columns, dm=0, negative=3, workers=8, vector_size=dim, epochs=20, min_count=2, seed=13)
 
     # Save trained model
-    model_file = '../sherlock/features/par_vec_retrained_{}.pkl'.format(dim)
+
+    model_file = Path(__file__).parent / 'features' / f'par_vec_retrained_{dim}.pkl',
     model.save(model_file)
     model.delete_temporary_training_data(keep_doctags_vectors=True, keep_inference=True)
     
@@ -36,7 +39,7 @@ def train_paragraph_embeddings_features(columns, dim):
 def infer_paragraph_embeddings_features(data, dim):
 
     # Load pretrained paragraph vector model
-    model = Doc2Vec.load('../sherlock/features/par_vec_trained_{}.pkl'.format(dim))
+    model = Doc2Vec.load(Path(__file__).parent / 'features' / f'par_vec_retrained_{dim}.pkl')
 
     f = pd.DataFrame()
 

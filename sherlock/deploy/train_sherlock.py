@@ -5,6 +5,7 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 
 from sherlock.deploy import model_helpers
+from pathlib import Path
 
 SEED = 13
 
@@ -32,8 +33,8 @@ def _get_categorical_label_encodings(y_train, y_val, nn_id) -> (list, list):
     # Prepare categorical label encoder
     encoder = LabelEncoder()
     encoder.fit(y_train)
-
-    np.save(f"../sherlock/deploy/classes_{nn_id}.npy", encoder.classes_)
+    
+    np.save(Path(__file__).parent / 'deploy' / f"classes_{nn_id}.npy", encoder.classes_)
 
     # Convert train labels
     y_train_int = encoder.transform(y_train)
@@ -56,12 +57,12 @@ def _save_retrained_sherlock_model(sherlock_model, nn_id: str):
     nn_id
         Identifier for retrained model.
     """
-
+    model_path = Path(__file__).parent.parent / 'models'
     model_json = sherlock_model.to_json()
-    with open(f"../models/{nn_id}_model.json", "w") as json:
+    with open(model_path / f"{nn_id}_model.json", "w") as json:
         json.write(model_json)
 
-    sherlock_model.save_weights(f"../models/{nn_id}_weights.h5")
+    sherlock_model.save_weights(model_path / f"{nn_id}_weights.h5")
 
 
 def train_sherlock(

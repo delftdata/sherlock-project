@@ -2,15 +2,17 @@ import os
 
 from google_drive_downloader import GoogleDriveDownloader as gd
 
+from pathlib import Path
 
 def download_data():
     """Download raw and preprocessed data files.
     The data is downloaded from Google Drive and stored in the 'data/' directory.
     """
-    data_dir = '../data/data.zip'
+
+    data_dir = Path(__file__).parent.parent / 'data' / 'data.zip'
     print(f"Downloading the raw and preprocessed data into {data_dir}.")
 
-    if not os.path.exists(data_dir):
+    if not data_dir.exists():
         print('Downloading data directory.')
         dir_name = data_dir
         gd.download_file_from_google_drive(

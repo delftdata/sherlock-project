@@ -43,7 +43,7 @@ def construct_sherlock_model(nn_id: str, with_weights: bool):
     lr = 0.0001
     callbacks = [EarlyStopping(monitor="val_loss", patience=5)]
 
-    with open(Path(__file__).parent.parent.parent / 'models' / 'sherlock_model.json', "r"):
+    with open(Path(__file__).parent.parent.parent / 'models' / 'sherlock_model.json', "r") as file:
         sherlock_model = model_from_json(file.read())
     
     if with_weights:

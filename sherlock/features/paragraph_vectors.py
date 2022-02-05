@@ -39,7 +39,7 @@ def train_paragraph_embeddings_features(columns, dim):
 def infer_paragraph_embeddings_features(data, dim):
 
     # Load pretrained paragraph vector model
-    model_path = Path(__file__).parent / f'par_vec_retrained_{dim}.pkl'
+    model_path = Path(__file__).parent / f'par_vec_trained_{dim}.pkl'
     model = Doc2Vec.load(str(model_path.resolve()))
 
     f = pd.DataFrame()

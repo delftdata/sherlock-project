@@ -47,7 +47,8 @@ def construct_sherlock_model(nn_id: str, with_weights: bool):
         sherlock_model = model_from_json(file.read())
     
     if with_weights:
-        sherlock_model.load_weights(Path(__file__).parent.parent.parent / 'models' / f"{nn_id}_weights.h5")
+        model_path = Path(__file__).parent.parent.parent / 'models' / f"{nn_id}_weights.h5"
+        sherlock_model.load_weights(str(model_path.resolve()))
         
     sherlock_model.compile(
         optimizer=tf.keras.optimizers.Adam(lr=lr),

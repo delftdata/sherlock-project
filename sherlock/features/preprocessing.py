@@ -20,8 +20,8 @@ from sherlock.features.paragraph_vectors import infer_paragraph_embeddings_featu
 def prepare_feature_extraction():
     """Download embedding files from Google Drive if they do not exist yet."""
 
-    word_embedding_file = Path(__file__).parent / 'features' / f'glove.6B.50d.txt'
-    paragraph_vector_file = Path(__file__).parent / 'features' / 'par_vec_trained_400.pkl.docvecs.vectors_docs.npy'
+    word_embedding_file = Path(__file__).parent /  f'glove.6B.50d.txt'
+    paragraph_vector_file = Path(__file__).parent / 'par_vec_trained_400.pkl.docvecs.vectors_docs.npy'
     
     print(
         f"""Preparing feature extraction by downloading 2 files:
@@ -57,7 +57,7 @@ def prepare_feature_extraction():
     
 def prepare_word_embeddings():
 
-    word_vectors_f = open(Path(__file__).parent / 'features' / f'glove.6B.50d.txt', encoding='utf-8')
+    word_vectors_f = open(Path(__file__).parent / f'glove.6B.50d.txt', encoding='utf-8')
     word_to_embedding = {}
 
     for w in word_vectors_f:

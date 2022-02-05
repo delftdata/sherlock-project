@@ -34,7 +34,7 @@ def _get_categorical_label_encodings(y_train, y_val, nn_id) -> (list, list):
     encoder = LabelEncoder()
     encoder.fit(y_train)
     
-    np.save(Path(__file__).parent / 'deploy' / f"classes_{nn_id}.npy", encoder.classes_)
+    np.save(Path(__file__).parent / f"classes_{nn_id}.npy", encoder.classes_)
 
     # Convert train labels
     y_train_int = encoder.transform(y_train)
@@ -57,7 +57,7 @@ def _save_retrained_sherlock_model(sherlock_model, nn_id: str):
     nn_id
         Identifier for retrained model.
     """
-    model_path = Path(__file__).parent.parent / 'models'
+    model_path = Path(__file__).parent.parent.parent / 'models'
     model_json = sherlock_model.to_json()
     with open(model_path / f"{nn_id}_model.json", "w") as json:
         json.write(model_json)

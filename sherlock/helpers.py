@@ -9,7 +9,7 @@ def download_data():
     The data is downloaded from Google Drive and stored in the 'data/' directory.
     """
 
-    data_dir = Path(__file__).parent.parent / 'data' / 'data.zip'
+    data_dir = Path(__file__).parent.parent.parent / 'data' / 'data.zip'
     print(f"Downloading the raw and preprocessed data into {data_dir}.")
 
     if not data_dir.exists():

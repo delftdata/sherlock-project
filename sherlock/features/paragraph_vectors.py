@@ -29,7 +29,7 @@ def train_paragraph_embeddings_features(columns, dim):
 
     # Save trained model
 
-    model_file = Path(__file__).parent / 'features' / f'par_vec_retrained_{dim}.pkl',
+    model_file = Path(__file__).parent / f'par_vec_retrained_{dim}.pkl',
     model.save(model_file)
     model.delete_temporary_training_data(keep_doctags_vectors=True, keep_inference=True)
     
@@ -39,7 +39,7 @@ def train_paragraph_embeddings_features(columns, dim):
 def infer_paragraph_embeddings_features(data, dim):
 
     # Load pretrained paragraph vector model
-    model = Doc2Vec.load(Path(__file__).parent / 'features' / f'par_vec_retrained_{dim}.pkl')
+    model = Doc2Vec.load(Path(__file__).parent / f'par_vec_retrained_{dim}.pkl')
 
     f = pd.DataFrame()
 
